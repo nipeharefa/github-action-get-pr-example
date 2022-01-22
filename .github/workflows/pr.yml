@@ -1,0 +1,23 @@
+name: Get PR
+
+
+on:
+  pull_request:
+    branches:    
+      - 'main'
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        go: [1.17]
+    name: ${{ matrix.os }} @ Go ${{ matrix.go }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up Go ${{ matrix.go }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go }}
+      - name: Get PR Label
+        run: echo ${{ github.event.label.name }}
